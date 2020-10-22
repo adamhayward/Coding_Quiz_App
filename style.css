@@ -1,0 +1,48 @@
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    
+    body {
+        background-image: url(https://sfwallpaper.com/images/web-backgrounds-9.jpg);
+        ;
+    }
+    
+    #header {
+        margin-top: 10px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    
+    #highscores {
+        position: absolute;
+        left: 5%;
+        width: 50%;
+    }
+    
+    #count-down {
+        position: absolute;
+        right: 5%;
+        width: 50%;
+        text-align: right;
+    }
+    
+    button {
+        padding: 10px;
+        margin: 24px;
+    }
+    
+    .main-content {
+        margin-top: 10%;
+        padding: 5%;
+        width: 70%;
+        height: auto;
+        background-color: white;
+        text-align: center;
+    }
+    
+    #hidden-text {
+        position: relative;
+        left: 5%;
+        width: 90%;
+    }
