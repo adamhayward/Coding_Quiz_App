@@ -58,14 +58,14 @@ function setCounterText() {
 timer.textContent = "Time Remaining: " + timeCount;
 }
 // Assining inital text to be presented to user on HTML doc.
-function startScreen() {
+function screen1() {
 h3El.textContent = "Java Script Quiz";
-greeting.textContent = "The timer will begin once you hit start quiz. Your time will go down by 10 seconds for every wrong answer.";
+greeting.textContent = "The timer will begin once you hit start. Your time will go down by 10 seconds for every wrong answer.";
 startBtn.textContent = "Start";
 answers.style.display = "none";
 }
-// Initiates the startScreen Function. 
-startScreen();
+// Initiates the screen1 Function. 
+screen1();
 // Initiats the time. 
 setCounterText();
 // assinging fucniton to be carried out after start button is initiated.
