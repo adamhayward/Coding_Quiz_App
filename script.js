@@ -41,11 +41,11 @@ var questionsArr = {
     ],  
 }
 // assigning varibles to specific parts of HTML doc.
-var timer = document.getElementById("count-down");
-var h3El = document.querySelector("h3");
-var greeting = document.getElementById("greeting");
-var startBtn = document.getElementById("start");
-var answers = document.getElementById("answers");
+var timer = $('#clock');
+var h3El = $('h3');
+var greeting = $('#greeting');
+var startBtn = $('#start');
+var answers = $('#answers');
 
 var timerInterval;
 var timeCount = 75;

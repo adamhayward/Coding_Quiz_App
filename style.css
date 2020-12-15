@@ -1,19 +1,19 @@
    /* responsible for formating entire document */
-   * {
+   /* * {
         box-sizing: border-box;
         padding: 0;
         margin: 0;
-    }
+    } */
     /* Formats body; setting background image */
     body {
         background-image: url(https://sfwallpaper.com/images/web-backgrounds-9.jpg);
         ;
     }
     /* responisble for formating the header */
-    #header {
-        margin-top: 10px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    }
+   header {
+       background-color: white;
+       height:150px;
+   }
     /* creates window on page for script to be dispalyed */
     .main-content {
         margin-top: 10%;
@@ -25,16 +25,28 @@
     }
     /* styles link to high scores list */
     #highscores {
-        position: absolute;
-        left: 5%;
-        width: 50%;
+        position: relative;
+        /* background-color: wheat; */
+        top: 25px;
+        /* width: 50%;  */
+        text-align: right;
+    }
+    #reset {
+        position: relative;
+        top: 25px;
+        color: white;
+        text-align: center;
     }
     /* styels the count down clock */
-    #count-down {
-        position: absolute;
-        right: 5%;
-        width: 50%;
-        text-align: right;
+    #clock {
+        /* border: solid;
+        border-radius: 5%; */
+        width: 235px;
+        background-color: violet;
+        position: relative;
+        top: 25px;
+        color: white;
+        text-align: center;
     }
     /* styles the greeting message */
     #greeting {
