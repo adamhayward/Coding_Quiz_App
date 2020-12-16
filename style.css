@@ -28,7 +28,15 @@
        border-color:#ffc107b2;
        box-shadow:0px 0px 20px 15px darkgray;
     }
-   
+
+    .choices {
+        width:400px;
+        height: 100px;
+    }
+   #start {
+       align-items: center;
+   }
+ 
     /* styles link to high scores list */
     #highscores {
         position: relative;
