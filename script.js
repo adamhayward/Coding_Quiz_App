@@ -55,24 +55,24 @@ var scoreCount = 0;
 /* Creating functions:
 creates the timer's text & presents time remaining for timeCount var. */
 function setCounterText() {
-timer.textContent = "Time Remaining: " + timeCount;
+timer.append(`Time Remaining: ${timeCount}`);
 }
 // Assining inital text to be presented to user on HTML doc.
 function screen1() {
 h3El.textContent = "Java Script Quiz";
 greeting.textContent = "The timer will begin once you hit start. Your time will go down by 10 seconds for every wrong answer.";
 startBtn.textContent = "Start";
-answers.style.display = "none";
+// answers.style.display = "none";
 }
 // Initiates the screen1 Function. 
 screen1();
 // Initiats the time. 
 setCounterText();
 // assinging fucniton to be carried out after start button is initiated.
-startBtn.addEventListener("click", function (event) {
+startBtn.on("click", function (event) {
 event.preventDefault()
 scoreCount = 0;
-startBtn.style.display = "none";
+startBtn.
 answers.style.display = "block";
 greeting.textContent = " ";
 });
