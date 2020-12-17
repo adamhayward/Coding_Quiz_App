@@ -1,25 +1,30 @@
 var questionsArr = [
   {
     question: "Testing 1 question",
-    answers: ["w", "B", "C", "D"],
-    correctAnswer: "A",
+    answersChoices: ["A1", "B1", "C1", "D1"],
+    correctAnswer: "B",
   },
   {
     question: "Testing 2 question",
-    answers: ["a", "B", "C", "D"],
+    answersChoices: ["a", "B", "C", "D"],
     correctAnswer: "A",
   },
   {
     question: "Testing 3 question",
-    answers: ["A", "B", "C", "D"],
+    answersChoices: ["A", "B", "C", "D"],
     correctAnswer: "A",
   },
   {
     question: "Testing 4 question",
-    answers: ["A", "B", "C", "D"],
+    answersChoices: ["A", "B", "C", "D"],
     correctAnswer: "A",
   },
 ];
+
+// arrau to store asked questions
+var userAnswers = [];
+var checkedAnswer;
+
 // assigning varibles to specific parts of HTML doc.
 var timer = $("#clock");
 var mainContent = $(".main-content");
@@ -27,7 +32,10 @@ var mainContent = $(".main-content");
 var newBTN = $("<button>");
 var greeting = $("#greeting");
 var startBtn = $("#start");
-var answers = $("#answers");
+
+var questions = [];
+
+// const answers = $("#answers");
 
 var timerInterval;
 var timeCount = 75;
@@ -36,27 +44,67 @@ var scoreCount;
 
 startBtn.on("click", function (event) {
   event.preventDefault();
+  startBtn.empty();
   writeQuestions();
 
   function writeQuestions() {
-    startBtn.empty();
-    $("#title").empty().append("Question 1");
+    $("#title").empty().text(`Question 1`);
+
     $("#question").empty();
     $("#start").removeClass("btn btn-primary");
 
     for (var i = 0; i < questionsArr.length; i++) {
-      $("#question").text(questionsArr[i].question);
-      $("#choiceA").addClass("btn btn-primary").text(questionsArr[i].answers[0]);
-      $("#choiceB").addClass("btn btn-primary").text(questionsArr[i].answers[1]);
-      $("#choiceC").addClass("btn btn-primary").text(questionsArr[i].answers[2]);
-      $("#choiceD").addClass("btn btn-primary").text(questionsArr[i].answers[3]);
+      $("#question").text(questionsArr[0].question);
+      a.addClass("btn btn-primary").text(questionsArr[0].answersChoices[0]);
+      b.addClass("btn btn-primary").text(questionsArr[0].answersChoices[1]);
+      c.addClass("btn btn-primary").text(questionsArr[0].answersChoices[2]);
+      d.addClass("btn btn-primary").text(questionsArr[0].answersChoices[3]);
     }
   }
+  
 });
-// console.log(questionsArr[i].question)
-//     $("#choiceA")
-//       .addClass("btn btn-primary")
-//       .append(questionsArr[0].answers[0]);
-//     $("#choiceB").addClass("btn btn-primary").append(questionsArr.answers);
-//     $("#choiceC").addClass("btn btn-primary").append(questionsArr.answers);
-//     $("#choiceD").addClass("btn btn-primary").append(questionsArr};
+
+const a = $("#choiceA");
+  const b = $("#choiceB");
+  const c = $("#choiceC");
+  const d = $("#choiceD");
+
+const chooseA = () => {
+  userAnswers.push("A");
+  checkedAnswer = userAnswers.pop();
+  console.log(checkedAnswer)
+  selectAnswer();
+};
+const chooseB = () => {
+  userAnswers.push("B");
+  checkedAnswer = userAnswers.pop();
+  console.log(checkedAnswer)
+  selectAnswer();
+};
+const chooseC = () => {
+  userAnswers.push("C");
+  checkedAnswer = userAnswers.pop();
+  console.log(checkedAnswer)
+  selectAnswer();
+};
+const chooseD = () => {
+  userAnswers.push("D");
+  checkedAnswer = userAnswers.pop();
+  console.log(checkedAnswer)
+  selectAnswer();
+};
+
+a.on("click", chooseA);
+b.on("click", chooseB);
+c.on("click", chooseC);
+d.on("click", chooseD);
+
+
+
+  function selectAnswer() {
+    if (checkedAnswer == questionsArr[0].correctAnswer[0]) {
+      console.log(`correct, the answer is ${questionsArr[0].correctAnswer[0]}`);
+    } else {
+      console.log("tryagain");
+    }
+  }

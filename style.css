@@ -11,6 +11,7 @@
     /* responisble for formating the header */
    header {
        background-color: white;
+       min-width: 400px;
        height:150px;
        border-bottom: solid 5px; 
        border-color:#ffc107b2;
@@ -30,7 +31,8 @@
     }
 
     .choices {
-        width:300px;
+        min-width: 250px;
+        /* width: 400px; */
         height: auto;
     }
    #start {
