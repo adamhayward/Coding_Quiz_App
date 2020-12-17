@@ -35,33 +35,40 @@ var greeting = $("#greeting");
 var startBtn = $("#start");
 
 var questions = [];
-
-// const answers = $("#answers");
+var questionNum = 3;
 
 var timerInterval;
 var timeCount = 75;
 var idx_question = 0;
 var scoreCount;
 
-startBtn.on("click", function (event) {
-  event.preventDefault();
-  startBtn.empty();
-  writeQuestions();
+function writeQuestions(array) {
+  array.sort(function () {
+    return 0.5 - Math.random();
+  });
 
-  function writeQuestions() {
+  for (let i = 0; i < array.length; i++) {
     $("#start").removeClass("btn btn-primary");
-    
-    for (var i = 0; i < questionsArr.length; i++) {
-      $("#title").empty().text(`Question ${[i]}`);
-      $("#question").empty().text(questionsArr[i].question);
-      a.addClass("btn btn-primary").text(questionsArr[i].answersChoices[0]);
-      b.addClass("btn btn-primary").text(questionsArr[i].answersChoices[1]);
-      c.addClass("btn btn-primary").text(questionsArr[i].answersChoices[2]);
-      d.addClass("btn btn-primary").text(questionsArr[i].answersChoices[3]);
-      correctAnswer = questionsArr[i].correctAnswer;
-    }
+
+    $("#title").text(`Question ${[i++]}`);
+
+    $("#question").empty().text(array[i].question);
+    a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
+    b.addClass("btn btn-primary").text(array[i].answersChoices[1]);
+    c.addClass("btn btn-primary").text(array[i].answersChoices[2]);
+    d.addClass("btn btn-primary").text(array[i].answersChoices[3]);
+    correctAnswer = questionsArr[i].correctAnswer;
   }
-});
+}
+
+function selectAnswer() {
+  if (checkedAnswer === correctAnswer) {
+    console.log(`correct, the answer is ${correctAnswer}`);
+  } else {
+    console.log("try again");
+  }
+  writeQuestions(questionsArr);
+}
 
 const a = $("#choiceA");
 const b = $("#choiceB");
@@ -93,16 +100,15 @@ const chooseD = () => {
   selectAnswer();
 };
 
+
+
+startBtn.on("click", (event) => {
+  event.preventDefault();
+  startBtn.empty();
+  writeQuestions(questionsArr);
+});
+
 a.on("click", chooseA);
 b.on("click", chooseB);
 c.on("click", chooseC);
 d.on("click", chooseD);
-
-function selectAnswer() {
-  if (checkedAnswer === correctAnswer) {
-    console.log(`correct, the answer is ${correctAnswer}`);
-    // writeQuestions();
-  } else {
-    console.log("try again");
-  }
-}
