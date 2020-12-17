@@ -24,6 +24,7 @@ var questionsArr = [
 // arrau to store asked questions
 var userAnswers = [];
 var checkedAnswer;
+var correctAnswer;
 
 // assigning varibles to specific parts of HTML doc.
 var timer = $("#clock");
@@ -48,49 +49,47 @@ startBtn.on("click", function (event) {
   writeQuestions();
 
   function writeQuestions() {
-    $("#title").empty().text(`Question 1`);
-
-    $("#question").empty();
     $("#start").removeClass("btn btn-primary");
-
+    
     for (var i = 0; i < questionsArr.length; i++) {
-      $("#question").text(questionsArr[0].question);
-      a.addClass("btn btn-primary").text(questionsArr[0].answersChoices[0]);
-      b.addClass("btn btn-primary").text(questionsArr[0].answersChoices[1]);
-      c.addClass("btn btn-primary").text(questionsArr[0].answersChoices[2]);
-      d.addClass("btn btn-primary").text(questionsArr[0].answersChoices[3]);
+      $("#title").empty().text(`Question ${[i]}`);
+      $("#question").empty().text(questionsArr[i].question);
+      a.addClass("btn btn-primary").text(questionsArr[i].answersChoices[0]);
+      b.addClass("btn btn-primary").text(questionsArr[i].answersChoices[1]);
+      c.addClass("btn btn-primary").text(questionsArr[i].answersChoices[2]);
+      d.addClass("btn btn-primary").text(questionsArr[i].answersChoices[3]);
+      correctAnswer = questionsArr[i].correctAnswer;
     }
   }
-  
 });
 
 const a = $("#choiceA");
-  const b = $("#choiceB");
-  const c = $("#choiceC");
-  const d = $("#choiceD");
+const b = $("#choiceB");
+const c = $("#choiceC");
+const d = $("#choiceD");
 
 const chooseA = () => {
   userAnswers.push("A");
   checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer)
+  console.log(checkedAnswer);
   selectAnswer();
 };
 const chooseB = () => {
   userAnswers.push("B");
   checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer)
+  console.log(checkedAnswer);
   selectAnswer();
 };
 const chooseC = () => {
   userAnswers.push("C");
   checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer)
+  console.log(checkedAnswer);
   selectAnswer();
 };
 const chooseD = () => {
   userAnswers.push("D");
   checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer)
+  console.log(checkedAnswer);
   selectAnswer();
 };
 
@@ -99,12 +98,11 @@ b.on("click", chooseB);
 c.on("click", chooseC);
 d.on("click", chooseD);
 
-
-
-  function selectAnswer() {
-    if (checkedAnswer == questionsArr[0].correctAnswer[0]) {
-      console.log(`correct, the answer is ${questionsArr[0].correctAnswer[0]}`);
-    } else {
-      console.log("tryagain");
-    }
+function selectAnswer() {
+  if (checkedAnswer === correctAnswer) {
+    console.log(`correct, the answer is ${correctAnswer}`);
+    // writeQuestions();
+  } else {
+    console.log("try again");
   }
+}
