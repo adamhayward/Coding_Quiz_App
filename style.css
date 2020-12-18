@@ -1,14 +1,17 @@
     /* Formats body; setting background image */
     body {
-        background-image: url(https://sfwallpaper.com/images/web-backgrounds-9.jpg);
+        /* background-image: url(https://sfwallpaper.com/images/web-backgrounds-9.jpg); */
+        background-image: url(https://image.shutterstock.com/image-vector/seamless-dots-pattern-vector-black-600w-525908206.jpg)
     }
     /* responisble for formating the header */
    header {
-       background-color: white;
+       background: linear-gradient(rgba(255, 255, 255, 0.9),rgba(250, 250, 250, .98));
+    
+       /* background-image: url(https://image.shutterstock.com/image-vector/geometric-simple-minimalistic-background-triangles-600w-546395581.jpg); */
        height:150px;
        border-bottom: solid 5px; 
        border-color:#ffc107b2;
-       box-shadow:15px 7px 50px 7px violet;
+       box-shadow:0px 5px 50px 20px violet;
     }
 
    
@@ -19,36 +22,78 @@
         min-width: 300px;
         width: 70%;
         height: auto;
-        background-color: white;
+        background: linear-gradient(rgba(255, 255, 255, 0.9),rgba(250, 250, 250, .98),rgba(255, 255, 255, .95));
         text-align: center;
         border: solid 5px; 
         border-color:#ffc107b2;
-        box-shadow:0px 0px 50px 15px darkgray;
+        border-radius: 25px;
+        box-shadow:0px 0px 50px 20px darkgray;
     }
 
     .choices {
         min-width:200px;
-        /* width: 400px; */
         height: auto;
+        /* box-shadow:0px 0px 10px 2.5px lightgray; */
+
     }
    #start {
        align-items: center;
+       box-shadow:0px 0px 10px 2.5px lightgray;
    }
  
     /* styles link to high scores list */
+
+    #highscores:hover, #start:hover {
+        box-shadow:0px 0px 5px 1.25px lightgray;
+        background-color: #007BFF;
+        border: none;}
+
     #highscores {
         position: relative;
-        /* background-color: wheat; */
         top: 25px;
-        /* width: 50%;  */
-        text-align: right;
+        display: inline-block;
+        background: linear-gradient(#00d9fff5, #007BFF);
+        box-shadow:0px 0px 10px 2.5px lightgray;
+        text-align: center;
+        text-shadow:1px 2.5px 2.5px darkslategrey;
     }
+
+    #highscores:after {
+        content: '';
+        position:absolute;
+        top: 2px;
+        left: 2px;
+        width: calc(100% - 4px);
+        height: 35%;
+        background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,0.2));
+    }
+    #reset:hover {
+        box-shadow:0px 0px 5px 1.25px lightgray;
+        background-color: #FFC107;
+        border: none;}
+        
     #reset {
         position: relative;
         top: 25px;
+        display: inline-block;
         color: white;
+        background: linear-gradient(#ffe292, #FFC107);
         text-align: center;
+        box-shadow:0px 0px 10px 2.5px lightgray;
+        text-shadow:1px 2.5px 2.5px darkslategrey;
     }
+    #reset:after {
+        content: '';
+        position:absolute;
+        top: 2px;
+        left: 2px;
+        width: calc(100% - 4px);
+        height: 35%;
+        background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,0.2));
+    }
+
+    /* #clock:hover {
+        box-shadow:0px 0px 5px 1.25px lightgray} */
     /* styels the count down clock */
     #clock {
         /* border: solid;
@@ -58,11 +103,10 @@
         position: relative;
         top: 25px;
         color: white;
-        text-align: center;
+        box-shadow:0px 0px 10px 2.5px lightgray;
+        text-shadow:1px 2.5px 2.5px darkslategrey;
     }
     /* styles the greeting message */
-    #greeting {
-        position: relative;
-        left: 5%;
-        width: 90%;
+    #question {
+        text-shadow:1px 2.5px 2.5px lightgray;
     }

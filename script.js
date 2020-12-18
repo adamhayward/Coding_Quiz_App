@@ -46,12 +46,11 @@ function writeQuestions(array) {
   array.sort(function () {
     return 0.5 - Math.random();
   });
-
   for (let i = 0; i < array.length; i++) {
     $("#start").removeClass("btn btn-primary");
-
-    $("#title").text(`Question ${[i++]}`);
-
+    for (let j = 1; j < i; j++) {
+    $("#title").text(`Question ${[j]}`);
+    }
     $("#question").empty().text(array[i].question);
     a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
     b.addClass("btn btn-primary").text(array[i].answersChoices[1]);
