@@ -20,7 +20,12 @@ var questionsArr = [
     correctAnswer: "A",
   },
 ];
+var totalQuestions = questionsArr.length;
 
+// Math fucntion to sort 'arry' at random
+questionsArr.sort(function () {
+  return 0.5 - Math.random();
+});
 // arrau to store asked questions
 var userAnswers = [];
 var checkedAnswer;
@@ -34,29 +39,36 @@ var newBTN = $("<button>");
 var greeting = $("#greeting");
 var startBtn = $("#start");
 
-var questions = [];
-var questionNum = 3;
-
-var timerInterval;
-var timeCount = 75;
-var idx_question = 0;
+var idx_question = 1;
+var askedQuestions = [];
 var scoreCount;
 
+
 function writeQuestions(array) {
-  array.sort(function () {
-    return 0.5 - Math.random();
-  });
+  
+  
   for (let i = 0; i < array.length; i++) {
     $("#start").removeClass("btn btn-primary");
-    for (let j = 1; j < i; j++) {
-    $("#title").text(`Question ${[j]}`);
-    }
     $("#question").empty().text(array[i].question);
     a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
     b.addClass("btn btn-primary").text(array[i].answersChoices[1]);
     c.addClass("btn btn-primary").text(array[i].answersChoices[2]);
     d.addClass("btn btn-primary").text(array[i].answersChoices[3]);
     correctAnswer = questionsArr[i].correctAnswer;
+    
+   
+  }
+
+  questionNum();
+  
+  function questionNum() {
+    $("#title").text(`Question ${idx_question}`);
+    idx_question++;
+    if (idx_question - 1 > totalQuestions) {
+      mainContent
+        .empty()
+        .append("Pencils Up!<br>Your time has expired");
+    }
   }
 }
 
@@ -66,7 +78,12 @@ function selectAnswer() {
   } else {
     console.log("try again");
   }
+  
+  askedQuestions = questionsArr.pop();
   writeQuestions(questionsArr);
+  
+  console.log(questionsArr);
+  console.log(askedQuestions);
 }
 
 const a = $("#choiceA");
@@ -98,8 +115,6 @@ const chooseD = () => {
   console.log(checkedAnswer);
   selectAnswer();
 };
-
-
 
 startBtn.on("click", (event) => {
   event.preventDefault();

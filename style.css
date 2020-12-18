@@ -1,16 +1,14 @@
     /* Formats body; setting background image */
     body {
-        
-        /* background-image: url(https://sfwallpaper.com/images/web-backgrounds-9.jpg); */
         background-image: url(https://image.shutterstock.com/image-vector/seamless-dots-pattern-vector-black-600w-525908206.jpg)
     }
     /* responisble for formating the header */
    header {
-       
+      
+       width: 100%;
        background: linear-gradient(rgba(255, 255, 255, 0.9),rgba(250, 250, 250, .98));
-    
-       /* background-image: url(https://image.shutterstock.com/image-vector/geometric-simple-minimalistic-background-triangles-600w-546395581.jpg); */
-       height:150px;
+       height: 150px;
+       min-height:25%;
        border-bottom: solid 5px; 
        border-color:#ffc107b2;
        box-shadow:0px 7px 75px 30px violet;
@@ -18,10 +16,9 @@
    
 
    
-    /* creates window on page for script to be dispalyed */
+    /* creates window on page forscript to be dispalyed */
     .main-content {
-       
-        margin-top: 200px;
+        margin-top: 12%;
         padding: 5%;
         min-width: 300px;
         width: 70%;
@@ -110,7 +107,8 @@
         box-shadow:0px 0px 10px 2.5px lightgray;
         text-shadow:1px 2.5px 2.5px darkslategrey;
     }
-    /* styles the greeting message */
-    #question {
-        text-shadow:1px 2.5px 2.5px lightgray;
+    #title, #question{
+       
+        text-shadow:1px 2.5px 2.5px rgba(47, 79, 79, .3);
     }
+  
