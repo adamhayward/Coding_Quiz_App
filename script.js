@@ -1,7 +1,12 @@
 var questionsArr = [
   {
-    question: "Testing 1 question",
-    answersChoices: ["A1", "B1", "C1", "D1"],
+    question: "JS is short for:",
+    answersChoices: [
+      "A) JavaScript",
+      "B) JavaSide",
+      "C) JamesSyco",
+      "D) titledwave",
+    ],
     correctAnswer: "B",
   },
   {
@@ -22,31 +27,36 @@ var questionsArr = [
 ];
 var totalQuestions = questionsArr.length;
 
-// Math fucntion to sort 'arry' at random
-questionsArr.sort(function () {
-  return 0.5 - Math.random();
-});
 // arrau to store asked questions
 var userAnswers = [];
 var checkedAnswer;
 var correctAnswer;
 
 // assigning varibles to specific parts of HTML doc.
-var timer = $("#clock");
-var mainContent = $(".main-content");
+const timer = $("#clock");
+const mainContent = $(".main-content");
+const greeting = $("#greeting");
+const startBtn = $("#start");
+const a = $("#choiceA");
+const b = $("#choiceB");
+const c = $("#choiceC");
+const d = $("#choiceD");
 
 var newBTN = $("<button>");
-var greeting = $("#greeting");
-var startBtn = $("#start");
 
 var idx_question = 1;
 var askedQuestions = [];
-var scoreCount;
 
+var scoreCount = 0;
+var quizScore = 0;
 
-function writeQuestions(array) {
-  
-  
+const randomQuestion = () => {
+  // Math fucntion to sort 'arry' at random
+  questionsArr.sort(function () {
+    return 0.5 - Math.random();
+  });
+};
+const writeQuestions = (array) => {
   for (let i = 0; i < array.length; i++) {
     $("#start").removeClass("btn btn-primary");
     $("#question").empty().text(array[i].question);
@@ -55,66 +65,63 @@ function writeQuestions(array) {
     c.addClass("btn btn-primary").text(array[i].answersChoices[2]);
     d.addClass("btn btn-primary").text(array[i].answersChoices[3]);
     correctAnswer = questionsArr[i].correctAnswer;
-    
-   
   }
 
-  questionNum();
-  
-  function questionNum() {
+  questionNum(totalQuestions);
+
+  function questionNum(total) {
     $("#title").text(`Question ${idx_question}`);
     idx_question++;
-    if (idx_question - 1 > totalQuestions) {
+    if (idx_question - 1 > total) {
+      console.log(scoreCount)
+      console.log(askedQuestions.length)
+      scoreQuiz();
       mainContent
         .empty()
-        .append("Pencils Up!<br>Your time has expired");
+        .append(`Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`);
     }
   }
-}
-
-function selectAnswer() {
-  if (checkedAnswer === correctAnswer) {
-    console.log(`correct, the answer is ${correctAnswer}`);
-  } else {
-    console.log("try again");
-  }
-  
-  askedQuestions = questionsArr.pop();
-  writeQuestions(questionsArr);
-  
-  console.log(questionsArr);
-  console.log(askedQuestions);
-}
-
-const a = $("#choiceA");
-const b = $("#choiceB");
-const c = $("#choiceC");
-const d = $("#choiceD");
-
+};
 const chooseA = () => {
   userAnswers.push("A");
   checkedAnswer = userAnswers.pop();
   console.log(checkedAnswer);
-  selectAnswer();
+  gradeAnswer();
 };
 const chooseB = () => {
   userAnswers.push("B");
   checkedAnswer = userAnswers.pop();
   console.log(checkedAnswer);
-  selectAnswer();
+  gradeAnswer();
 };
 const chooseC = () => {
   userAnswers.push("C");
   checkedAnswer = userAnswers.pop();
   console.log(checkedAnswer);
-  selectAnswer();
+  gradeAnswer();
 };
 const chooseD = () => {
   userAnswers.push("D");
   checkedAnswer = userAnswers.pop();
   console.log(checkedAnswer);
-  selectAnswer();
+  gradeAnswer();
 };
+const gradeAnswer = () => {
+  if (checkedAnswer === correctAnswer) {
+    scoreCount++;
+    console.log(`correct, the answer is ${correctAnswer}`);
+  } else {
+    console.log("try again");
+  }
+  askedQuestions = questionsArr.pop();
+  writeQuestions(questionsArr);
+};
+const scoreQuiz = () => {
+  let rawGrade = (scoreCount/idx_question) * 100;
+  quizScore = rawGrade.toFixed(0);
+}
+
+randomQuestion();
 
 startBtn.on("click", (event) => {
   event.preventDefault();
