@@ -49,13 +49,13 @@ header {
     top: 25px;
 }
 
-#reset:hover {
+#info:hover {
     box-shadow:0px 0px 5px 1.25px lightgray;
     background-color: #FFC107;
     border: none;
 }
 
-#reset {
+#info {
     position: relative;
     top: 25px;
     display: inline-block;

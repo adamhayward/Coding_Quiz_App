@@ -72,7 +72,7 @@ const writeQuestions = (array) => {
     }
   };
   // populate question data
-  $("#question-container").fadeOut(0).delay(1000).fadeIn(1000);
+  $("#question-container").hide().delay(2000).fadeIn(1000);
   for (let i = 0; i < array.length; i++) {
     $("#question").text(array[i].question);
     a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
