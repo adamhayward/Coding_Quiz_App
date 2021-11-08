@@ -1,6 +1,6 @@
 /* Formats body; setting background image */
 body {
-    background-image: url(https://image.shutterstock.com/image-vector/seamless-dots-pattern-vector-black-600w-525908206.jpg)
+    background-size: 33.33%;
 }
 /* responisble for formating the header */
 header {
@@ -30,8 +30,8 @@ header {
 .choices {
     height: auto;
     min-width:200px;
-/* box-shadow:0px 0px 10px 2.5px lightgray; */
 }
+/* start button */
 #start {
     box-shadow:0px 0px 10px 2.5px lightgray;
     align-items: center;
@@ -48,15 +48,7 @@ header {
     display: inline-block;
     top: 25px;
 }
-/* .btn-primary:after {
-    content: '';
-    position:absolute;
-    top: 2px;
-    left: 2px;
-    width: calc(100% - 4px);
-    height: 35%;
-    background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,0.2));
-} */
+
 #reset:hover {
     box-shadow:0px 0px 5px 1.25px lightgray;
     background-color: #FFC107;
@@ -86,8 +78,6 @@ header {
 }
 /* styels the count down clock */
 #clock {
-    /* border: solid;
-    border-radius: 5%; */
     width: 235px;
     background-color: violet;
     position: relative;

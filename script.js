@@ -1,4 +1,5 @@
-var questionsArr = [
+// Quiz questions
+let questionsArr = [
   {
     question: "JS is short for:",
     answersChoices: [
@@ -11,7 +12,7 @@ var questionsArr = [
   },
   {
     question: "Testing 2 question",
-    answersChoices: ["a", "B", "C", "D"],
+    answersChoices: ["A", "B", "C", "D"],
     correctAnswer: "A",
   },
   {
@@ -25,41 +26,55 @@ var questionsArr = [
     correctAnswer: "A",
   },
 ];
-var totalQuestions = questionsArr.length;
-
-// arrau to store asked questions
-var userAnswers = [];
-var checkedAnswer;
-var correctAnswer;
-
-// assigning varibles to specific parts of HTML doc.
+// records total number of questions
+const totalQuestions = questionsArr.length;
+// arrays to store asked questions
+let userAnswers = [];
+let checkedAnswer;
+let correctAnswer;
+// varibles assigments for HTML elements
 const timer = $("#clock");
+const alert = $("#liveAlertPlaceholder");
 const mainContent = $(".main-content");
 const greeting = $("#greeting");
 const startBtn = $("#start");
-const a = $("#choiceA");
-const b = $("#choiceB");
-const c = $("#choiceC");
-const d = $("#choiceD");
+const answerChoices = $("#answers");
+const a = $("#A");
+const b = $("#B");
+const c = $("#C");
+const d = $("#D");
 
-var newBTN = $("<button>");
+let idx_question = 1;
+let askedQuestions = [];
 
-var idx_question = 1;
-var askedQuestions = [];
-
-var scoreCount = 0;
-var quizScore = 0;
-
+let scoreCount = 0;
+let quizScore = 0;
+//sorts questions at random to be pulled in random oreder
 const randomQuestion = () => {
   // Math fucntion to sort 'arry' at random
-  questionsArr.sort(function () {
+  questionsArr.sort(() => {
     return 0.5 - Math.random();
   });
 };
 const writeQuestions = (array) => {
+  // function to write
+  const questionNum = (total) => {
+    $("#question-number").text(`Question ${idx_question}`);
+    idx_question++;
+    // when all questons have been asked grade quiz
+    if (idx_question - 1 > total) {
+      scoreQuiz();
+      $("#question-container")
+        .empty()
+        .append(
+          `Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`
+        );
+    }
+  };
+  // populate question data
+  $("#question-container").fadeOut(0).delay(1000).fadeIn(1000);
   for (let i = 0; i < array.length; i++) {
-    $("#start").removeClass("btn btn-primary");
-    $("#question").empty().text(array[i].question);
+    $("#question").text(array[i].question);
     a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
     b.addClass("btn btn-primary").text(array[i].answersChoices[1]);
     c.addClass("btn btn-primary").text(array[i].answersChoices[2]);
@@ -68,68 +83,53 @@ const writeQuestions = (array) => {
   }
 
   questionNum(totalQuestions);
-
-  function questionNum(total) {
-    $("#title").text(`Question ${idx_question}`);
-    idx_question++;
-    if (idx_question - 1 > total) {
-      console.log(scoreCount)
-      console.log(askedQuestions.length)
-      scoreQuiz();
-      mainContent
-        .empty()
-        .append(`Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`);
-    }
-  }
 };
-const chooseA = () => {
-  userAnswers.push("A");
+// funciton to choose the user's answer
+const choose = (answer) => {
+  userAnswers.push(answer);
   checkedAnswer = userAnswers.pop();
   console.log(checkedAnswer);
   gradeAnswer();
+  console.log(scoreCount);
 };
-const chooseB = () => {
-  userAnswers.push("B");
-  checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer);
-  gradeAnswer();
-};
-const chooseC = () => {
-  userAnswers.push("C");
-  checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer);
-  gradeAnswer();
-};
-const chooseD = () => {
-  userAnswers.push("D");
-  checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer);
-  gradeAnswer();
-};
+// function to grade user's answer choice
 const gradeAnswer = () => {
+  // function to alert user if answer chosen was correct/incorrect
+  const alertGrade = (message, type) => {
+    alert.text(message);
+    alert.addClass("alert").addClass(`alert-${type}`);
+    alert.fadeIn(1200).fadeOut(1200);
+    askedQuestions = questionsArr.pop();
+    writeQuestions(questionsArr);
+  };
+  // logic for correct answer
   if (checkedAnswer === correctAnswer) {
+    alertGrade("Correct", "success");
     scoreCount++;
-    console.log(`correct, the answer is ${correctAnswer}`);
-  } else {
-    console.log("try again");
+    console.log(`Correct, the answer is ${correctAnswer}`);
   }
-  askedQuestions = questionsArr.pop();
-  writeQuestions(questionsArr);
+  // logic for incorrect answer
+  else {
+    alertGrade("Incorrect", "danger");
+    console.log(`Incorrect, the answer is ${correctAnswer}`);
+  }
 };
+// function to calculate users quiz score
 const scoreQuiz = () => {
-  let rawGrade = (scoreCount/idx_question) * 100;
+  let rawGrade = (scoreCount / totalQuestions) * 100;
   quizScore = rawGrade.toFixed(0);
-}
+};
 
+// page execution:
+// choose question in random order
 randomQuestion();
-
-startBtn.on("click", (event) => {
-  event.preventDefault();
-  startBtn.empty();
+// action to begin quiz
+startBtn.on("click", () => {
+  $("#greeting").fadeOut(1000);
   writeQuestions(questionsArr);
 });
-
-a.on("click", chooseA);
-b.on("click", chooseB);
-c.on("click", chooseC);
-d.on("click", chooseD);
+// actions to submits user's answer choices
+a.on("click", () => choose("A"));
+b.on("click", () => choose("B"));
+c.on("click", () => choose("C"));
+d.on("click", () => choose("D"));
