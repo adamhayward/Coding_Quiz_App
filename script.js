@@ -62,7 +62,7 @@ const writeQuestions = (array) => {
     $("#question-number").text(`Question ${idx_question}`);
     idx_question++;
     // when all questons have been asked grade quiz
-    if (idx_question - 1 > total) {
+    if (idx_question - 2 == total) {
       scoreQuiz();
       $("#question-container")
         .empty()
@@ -91,26 +91,32 @@ const choose = (answer) => {
   console.log(checkedAnswer);
   gradeAnswer();
   console.log(scoreCount);
+  console.log(idx_question);
+  console.log(totalQuestions);
 };
 // function to grade user's answer choice
 const gradeAnswer = () => {
   // function to alert user if answer chosen was correct/incorrect
   const alertGrade = (message, type) => {
     alert.text(message);
-    alert.addClass("alert").addClass(`alert-${type}`);
-    alert.fadeIn(1200).fadeOut(1200);
+    // reset styling to none
+    alert.removeAttr('class');
+    // assign new styling
+    alert.addClass(`alert alert-${type}`);
+    alert.fadeIn(1000).fadeOut(1000);
     askedQuestions = questionsArr.pop();
-    writeQuestions(questionsArr);
   };
   // logic for correct answer
   if (checkedAnswer === correctAnswer) {
     alertGrade("Correct", "success");
     scoreCount++;
+    writeQuestions(questionsArr);
     console.log(`Correct, the answer is ${correctAnswer}`);
   }
   // logic for incorrect answer
   else {
     alertGrade("Incorrect", "danger");
+    writeQuestions(questionsArr);
     console.log(`Incorrect, the answer is ${correctAnswer}`);
   }
 };
@@ -118,6 +124,7 @@ const gradeAnswer = () => {
 const scoreQuiz = () => {
   let rawGrade = (scoreCount / totalQuestions) * 100;
   quizScore = rawGrade.toFixed(0);
+  console.log(quizScore)
 };
 
 // page execution:
