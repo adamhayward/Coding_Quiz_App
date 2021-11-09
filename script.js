@@ -34,6 +34,7 @@ let checkedAnswer;
 let correctAnswer;
 // varibles assigments for HTML elements
 const timer = $("#clock");
+let remainingTime = 10 * totalQuestions;
 const alert = $("#liveAlertPlaceholder");
 const mainContent = $(".main-content");
 const greeting = $("#greeting");
@@ -49,6 +50,7 @@ let askedQuestions = [];
 
 let scoreCount = 0;
 let quizScore = 0;
+
 //sorts questions at random to be pulled in random oreder
 const randomQuestion = () => {
   // Math fucntion to sort 'arry' at random
@@ -56,13 +58,26 @@ const randomQuestion = () => {
     return 0.5 - Math.random();
   });
 };
+// function to begin timer
+const startTimer = () => {
+  let timeInterval = setInterval(() => {
+    timer.text(remainingTime);
+    remainingTime--;
+
+    if (remainingTime == 0 ||idx_question - 2 === totalQuestions ) {
+      clearInterval(timeInterval);
+    }
+
+  }, 1000);
+}
+
 const writeQuestions = (array) => {
   // function to write
   const questionNum = (total) => {
     $("#question-number").text(`Question ${idx_question}`);
     idx_question++;
     // when all questons have been asked grade quiz
-    if (idx_question - 2 == total) {
+    if (idx_question - 2 === total) {
       scoreQuiz();
       $("#question-container")
         .empty()
@@ -100,7 +115,7 @@ const gradeAnswer = () => {
   const alertGrade = (message, type) => {
     alert.text(message);
     // reset styling to none
-    alert.removeAttr('class');
+    alert.removeAttr("class");
     // assign new styling
     alert.addClass(`alert alert-${type}`);
     alert.fadeIn(1000).fadeOut(1000);
@@ -124,19 +139,25 @@ const gradeAnswer = () => {
 const scoreQuiz = () => {
   let rawGrade = (scoreCount / totalQuestions) * 100;
   quizScore = rawGrade.toFixed(0);
-  console.log(quizScore)
+  console.log(quizScore);
 };
 
 // page execution:
 // choose question in random order
+
+timer.text(remainingTime); 
+
 randomQuestion();
 // action to begin quiz
 startBtn.on("click", () => {
-  $("#greeting").fadeOut(1000);
+  $("#greeting").fadeOut(2000);
   writeQuestions(questionsArr);
+  startTimer();
 });
 // actions to submits user's answer choices
 a.on("click", () => choose("A"));
 b.on("click", () => choose("B"));
 c.on("click", () => choose("C"));
 d.on("click", () => choose("D"));
+
+
