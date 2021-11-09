@@ -63,9 +63,15 @@ const startTimer = () => {
   let timeInterval = setInterval(() => {
     timer.text(remainingTime);
     remainingTime--;
-
+    // when time runs out or all questons have been asked grade quiz
     if (remainingTime < 0 || idx_question - 2 === totalQuestions ) {
       clearInterval(timeInterval);
+      scoreQuiz();
+      $("#question-container")
+        .empty()
+        .append(
+          `Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`
+        );
     }
   }, 1000);
 }
@@ -75,15 +81,6 @@ const writeQuestions = (array) => {
   const questionNum = (total) => {
     $("#question-number").text(`Question ${idx_question}`);
     idx_question++;
-    // when all questons have been asked grade quiz
-    if (idx_question - 2 === total) {
-      scoreQuiz();
-      $("#question-container")
-        .empty()
-        .append(
-          `Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`
-        );
-    }
   };
   // populate question data
   $("#question-container").hide().delay(2000).fadeIn(1000);
