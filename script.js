@@ -64,10 +64,9 @@ const startTimer = () => {
     timer.text(remainingTime);
     remainingTime--;
 
-    if (remainingTime == 0 ||idx_question - 2 === totalQuestions ) {
+    if (remainingTime < 0 || idx_question - 2 === totalQuestions ) {
       clearInterval(timeInterval);
     }
-
   }, 1000);
 }
 
