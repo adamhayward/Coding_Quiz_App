@@ -34,22 +34,25 @@ let checkedAnswer;
 let correctAnswer;
 // varibles assigments for HTML elements
 const timer = $("#clock");
-let remainingTime = 10 * totalQuestions;
+const time = 10 * totalQuestions;
+let remainingTime = time;
+let attempt = 0;
 const alert = $("#liveAlertPlaceholder");
 const mainContent = $(".main-content");
 const greeting = $("#greeting");
 const startBtn = $("#start");
 const answerChoices = $("#answers");
-const a = $("#A");
-const b = $("#B");
-const c = $("#C");
-const d = $("#D");
+
+const statsContainer = $("#stats-container");
+const statsTable = $("#stats-table");
+const reQuizBtn = $("#retake-quiz");
 
 let idx_question = 1;
 let askedQuestions = [];
 
 let scoreCount = 0;
 let quizScore = 0;
+let incorrectAnswersCount = 0;
 
 //sorts questions at random to be pulled in random oreder
 const randomQuestion = () => {
@@ -64,21 +67,43 @@ const startTimer = () => {
     timer.text(remainingTime);
     remainingTime--;
     // when time runs out or all questons have been asked grade quiz
-    if (remainingTime < 0 || idx_question - 2 === totalQuestions ) {
+    if (remainingTime < 0 || idx_question - 2 === totalQuestions) {
+      let timeTaken = time - remainingTime - 1;
       clearInterval(timeInterval);
       scoreQuiz();
-      $("#question-container")
-        .empty()
-        .append(
-          `Pencils Up!<br> All done, you scored a:<br>${quizScore}% on this quiz!`
-        );
+      $("#question-container").empty();
+      statsContainer.delay(2000).fadeIn(1000);
+      attempt++;
+      statsTable.append(
+        `<tr>
+          <th>${attempt}</th>
+          <th>${quizScore}%</th>
+          <th>${timeTaken} s</th>
+          <th>${incorrectAnswersCount}</th>
+          </tr>`
+      );
     }
   }, 1000);
-}
+};
 
-const writeQuestions = (array) => {
+let writeQuestions = (array) => {
+  const row = $("<div></div>").addClass("row");
+  const col1 = $("<div></div>").addClass("col-12");
+  const col2 = $("<div></div>").addClass("col-12");
+  const newH3El = $("<h3></h3>").attr("id", "question-number");
+  const currentQuestion = $("<p></p>").attr("id", "question");
+  const answerA = $("<a></a>").attr("id", "A").addClass("choices m-1");
+  const answerB = $("<a></a>").attr("id", "B").addClass("choices m-1");
+  const answerC = $("<a></a>").attr("id", "C").addClass("choices m-1");
+  const answerD = $("<a></a>").attr("id", "D").addClass("choices m-1");
+
+    mainContent.append(row);
+    row.attr("id", "question-container");
+    $("#question-container").append(col1, col2);
+    col1.append(newH3El, currentQuestion, answerA, answerB);
+    col2.append(answerC, answerD);
   // function to write
-  const questionNum = (total) => {
+  let questionNum = (total) => {
     $("#question-number").text(`Question ${idx_question}`);
     idx_question++;
   };
@@ -86,25 +111,33 @@ const writeQuestions = (array) => {
   $("#question-container").hide().delay(2000).fadeIn(1000);
   for (let i = 0; i < array.length; i++) {
     $("#question").text(array[i].question);
-    a.addClass("btn btn-primary").text(array[i].answersChoices[0]);
-    b.addClass("btn btn-primary").text(array[i].answersChoices[1]);
-    c.addClass("btn btn-primary").text(array[i].answersChoices[2]);
-    d.addClass("btn btn-primary").text(array[i].answersChoices[3]);
+    $("#A").addClass("btn btn-primary").text(array[i].answersChoices[0]);
+    $("#B").addClass("btn btn-primary").text(array[i].answersChoices[1]);
+    $("#C").addClass("btn btn-primary").text(array[i].answersChoices[2]);
+    $("#D").addClass("btn btn-primary").text(array[i].answersChoices[3]);
     correctAnswer = questionsArr[i].correctAnswer;
   }
 
+  // funciton to choose the user's answer
+  const choose = (answer) => {
+    userAnswers.push(answer);
+    checkedAnswer = userAnswers.pop();
+    gradeAnswer();
+  } 
+
+
+  let a = $("#A");
+  let b = $("#B");
+  let c = $("#C");
+  let d = $("#D");
+  // actions to submits user's answer choices
+  a.on("click", () => choose("A"));
+  b.on("click", () => choose("B"));
+  c.on("click", () => choose("C"));
+  d.on("click", () => choose("D"));
   questionNum(totalQuestions);
 };
-// funciton to choose the user's answer
-const choose = (answer) => {
-  userAnswers.push(answer);
-  checkedAnswer = userAnswers.pop();
-  console.log(checkedAnswer);
-  gradeAnswer();
-  console.log(scoreCount);
-  console.log(idx_question);
-  console.log(totalQuestions);
-};
+
 // function to grade user's answer choice
 const gradeAnswer = () => {
   // function to alert user if answer chosen was correct/incorrect
@@ -115,45 +148,55 @@ const gradeAnswer = () => {
     // assign new styling
     alert.addClass(`alert alert-${type}`);
     alert.fadeIn(1000).fadeOut(1000);
-    askedQuestions = questionsArr.pop();
+    askedQuestions.push(questionsArr.pop()) ;
   };
   // logic for correct answer
   if (checkedAnswer === correctAnswer) {
     alertGrade("Correct", "success");
     scoreCount++;
+    $("#question-container").remove();
     writeQuestions(questionsArr);
-    console.log(`Correct, the answer is ${correctAnswer}`);
+    
   }
   // logic for incorrect answer
   else {
     alertGrade("Incorrect", "danger");
+    incorrectAnswersCount++;
+    $("#question-container").remove();
     writeQuestions(questionsArr);
-    console.log(`Incorrect, the answer is ${correctAnswer}`);
   }
 };
 // function to calculate users quiz score
 const scoreQuiz = () => {
   let rawGrade = (scoreCount / totalQuestions) * 100;
   quizScore = rawGrade.toFixed(0);
+  console.log(askedQuestions)
+  console.log(questionsArr)
   console.log(quizScore);
 };
 
 // page execution:
 // choose question in random order
-
-timer.text(remainingTime); 
-
 randomQuestion();
+timer.text(remainingTime);
+
 // action to begin quiz
 startBtn.on("click", () => {
   $("#greeting").fadeOut(2000);
   writeQuestions(questionsArr);
   startTimer();
 });
-// actions to submits user's answer choices
-a.on("click", () => choose("A"));
-b.on("click", () => choose("B"));
-c.on("click", () => choose("C"));
-d.on("click", () => choose("D"));
 
-
+reQuizBtn.on("click", () => {
+  statsContainer.fadeOut(2000);
+  questionsArr = askedQuestions.slice(0);
+  askedQuestions = [];
+  console.log(askedQuestions)
+  console.log(questionsArr)
+  randomQuestion;
+  idx_question = 1;
+  scoreCount = 0;
+  writeQuestions(questionsArr);
+  remainingTime = time;
+  startTimer();
+});
